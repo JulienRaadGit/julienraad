@@ -5,164 +5,261 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Julien Raad - Étudiant en informatique & Développeur</title>
     <meta name="description" content="Site vitrine de Julien Raad, étudiant en informatique et développeur. Découvrez mon parcours, mes projets et contactez-moi.">
+    <meta name="keywords" content="Julien Raad, développeur, informatique, Gaming Campus, projets web, portfolio">
+    <meta name="author" content="Julien Raad">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://julienraad.fr/">
+    <meta property="og:title" content="Julien Raad - Étudiant en informatique & Développeur">
+    <meta property="og:description" content="Site vitrine de Julien Raad, étudiant en informatique et développeur. Découvrez mon parcours, mes projets et contactez-moi.">
+    <meta property="og:image" content="https://julienraad.fr/og-image.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://julienraad.fr/">
+    <meta property="twitter:title" content="Julien Raad - Étudiant en informatique & Développeur">
+    <meta property="twitter:description" content="Site vitrine de Julien Raad, étudiant en informatique et développeur. Découvrez mon parcours, mes projets et contactez-moi.">
+    <meta property="twitter:image" content="https://julienraad.fr/og-image.jpg">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style">
+    <link rel="preload" href="style.css" as="style">
+    
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👨‍💻</text></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👨‍💻</text></svg>">
+    
+    <!-- Theme color -->
+    <meta name="theme-color" content="#2563eb">
+    <meta name="msapplication-TileColor" content="#2563eb">
 </head>
 <body>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+    
     <!-- Navigation -->
-    <nav class="navbar" id="navbar">
+    <nav class="navbar" id="navbar" role="navigation" aria-label="Navigation principale">
         <div class="nav-container">
             <div class="nav-logo">
-                <a href="#accueil">Julien Raad</a>
+                <a href="#accueil" aria-label="Julien Raad - Retour à l'accueil">Julien Raad</a>
             </div>
-            <ul class="nav-menu" id="nav-menu">
-                <li class="nav-item">
-                    <a href="#accueil" class="nav-link">Accueil</a>
+            <ul class="nav-menu" id="nav-menu" role="menubar">
+                <li class="nav-item" role="none">
+                    <a href="#accueil" class="nav-link" role="menuitem" aria-current="page">Accueil</a>
                 </li>
-                <li class="nav-item">
-                    <a href="#parcours" class="nav-link">Parcours</a>
+                <li class="nav-item" role="none">
+                    <a href="#parcours" class="nav-link" role="menuitem">Parcours</a>
                 </li>
-                <li class="nav-item">
-                    <a href="#projets" class="nav-link">Projets</a>
+                <li class="nav-item" role="none">
+                    <a href="#projets" class="nav-link" role="menuitem">Projets</a>
                 </li>
-                <li class="nav-item">
-                    <a href="#contact" class="nav-link">Contact</a>
+                <li class="nav-item" role="none">
+                    <a href="#contact" class="nav-link" role="menuitem">Contact</a>
                 </li>
             </ul>
-            <div class="hamburger" id="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
+            <button class="hamburger" id="hamburger" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="nav-menu">
+                <span class="bar" aria-hidden="true"></span>
+                <span class="bar" aria-hidden="true"></span>
+                <span class="bar" aria-hidden="true"></span>
+            </button>
         </div>
     </nav>
 
     <!-- Section Accueil -->
-    <section id="accueil" class="hero">
-        <div class="hero-container">
-            <div class="hero-content">
-                <h1 class="hero-title">Julien Raad</h1>
-                <p class="hero-subtitle">Étudiant en informatique & Développeur</p>
-                <div class="hero-description">
-                    <p>Passionné par le développement web et les nouvelles technologies, je mets mes compétences au service de projets innovants et créatifs.</p>
-                </div>
-                <div class="hero-image">
-                    <div class="profile-placeholder">
-                        <span class="placeholder-icon">👨‍💻</span>
+    <main id="main-content">
+        <section id="accueil" class="hero" aria-labelledby="hero-title">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <h1 class="hero-title" id="hero-title">Julien Raad</h1>
+                    <p class="hero-subtitle">Étudiant en informatique & Développeur</p>
+                    <div class="hero-description">
+                        <p>Passionné par le développement web et les nouvelles technologies, je mets mes compétences au service de projets innovants et créatifs. Spécialisé dans la création d'applications web modernes et d'expériences utilisateur exceptionnelles.</p>
+                    </div>
+                    <div class="hero-image">
+                        <div class="profile-placeholder" role="img" aria-label="Photo de profil de Julien Raad">
+                            <span class="placeholder-icon" aria-hidden="true">👨‍💻</span>
+                        </div>
+                    </div>
+                    <div class="hero-cta">
+                        <a href="mailto:julien.raad@email.com" class="cta-button" aria-label="Envoyer un email à Julien Raad">Me contacter</a>
+                        <a href="#projets" class="cta-button secondary" aria-label="Voir mes projets">Voir mes projets</a>
                     </div>
                 </div>
-                <div class="hero-cta">
-                    <a href="mailto:julien.raad@email.com" class="cta-button">Me contacter</a>
-                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Section Parcours -->
-    <section id="parcours" class="parcours">
-        <div class="container">
-            <h2 class="section-title">Mon Parcours</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <h3>Licence Informatique</h3>
-                        <p class="timeline-date">2021 - 2024</p>
-                        <p>Formation solide en informatique fondamentale, algorithmique, programmation et bases de données.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <h3>Gaming Campus Paris</h3>
-                        <p class="timeline-date">2024 - Présent</p>
-                        <p>Spécialisation en développement de jeux vidéo et technologies interactives.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <h3>Projets Personnels</h3>
-                        <p class="timeline-date">2022 - Présent</p>
-                        <p>Développement d'applications web et mobiles, exploration des dernières technologies.</p>
-                    </div>
+        <!-- Section Parcours -->
+        <section id="parcours" class="parcours" aria-labelledby="parcours-title">
+            <div class="container">
+                <h2 class="section-title" id="parcours-title">Mon Parcours</h2>
+                <div class="timeline" role="list" aria-label="Chronologie du parcours professionnel">
+                    <article class="timeline-item" role="listitem">
+                        <div class="timeline-marker" aria-hidden="true"></div>
+                        <div class="timeline-content">
+                            <h3>Licence Informatique</h3>
+                            <time class="timeline-date" datetime="2021/2024">2021 - 2024</time>
+                            <p>Formation solide en informatique fondamentale, algorithmique, programmation et bases de données. Acquisition de compétences en développement logiciel et architecture système.</p>
+                            <ul class="skills-list">
+                                <li>Algorithmique et structures de données</li>
+                                <li>Programmation orientée objet</li>
+                                <li>Bases de données relationnelles</li>
+                                <li>Architecture logicielle</li>
+                            </ul>
+                        </div>
+                    </article>
+                    <article class="timeline-item" role="listitem">
+                        <div class="timeline-marker" aria-hidden="true"></div>
+                        <div class="timeline-content">
+                            <h3>Gaming Campus Paris</h3>
+                            <time class="timeline-date" datetime="2024">2024 - Présent</time>
+                            <p>Spécialisation en développement de jeux vidéo et technologies interactives. Formation avancée en moteurs de jeu, programmation graphique et réalité virtuelle.</p>
+                            <ul class="skills-list">
+                                <li>Unity 3D et Unreal Engine</li>
+                                <li>Programmation graphique (OpenGL, DirectX)</li>
+                                <li>Réalité virtuelle et augmentée</li>
+                                <li>Game Design et Level Design</li>
+                            </ul>
+                        </div>
+                    </article>
+                    <article class="timeline-item" role="listitem">
+                        <div class="timeline-marker" aria-hidden="true"></div>
+                        <div class="timeline-content">
+                            <h3>Projets Personnels</h3>
+                            <time class="timeline-date" datetime="2022">2022 - Présent</time>
+                            <p>Développement d'applications web et mobiles, exploration des dernières technologies. Création de solutions innovantes et expérimentation avec les frameworks modernes.</p>
+                            <ul class="skills-list">
+                                <li>React, Vue.js, Angular</li>
+                                <li>Node.js et Express</li>
+                                <li>Bases de données NoSQL</li>
+                                <li>Docker et DevOps</li>
+                            </ul>
+                        </div>
+                    </article>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Section Projets -->
-    <section id="projets" class="projets">
-        <div class="container">
-            <h2 class="section-title">Mes Projets</h2>
-            <div class="projets-grid">
-                <div class="projet-card">
-                    <div class="projet-image">
-                        <div class="projet-placeholder">🎮</div>
-                    </div>
-                    <div class="projet-content">
-                        <h3>Kwiz</h3>
-                        <p>Application de quiz interactif avec système de scores et classements en temps réel.</p>
-                        <a href="#" class="projet-link">En savoir plus</a>
-                    </div>
-                </div>
-                <div class="projet-card">
-                    <div class="projet-image">
-                        <div class="projet-placeholder">🏠</div>
-                    </div>
-                    <div class="projet-content">
-                        <h3>Snugly</h3>
-                        <p>Plateforme de gestion immobilière avec interface intuitive et outils d'analyse.</p>
-                        <a href="#" class="projet-link">En savoir plus</a>
-                    </div>
-                </div>
-                <div class="projet-card">
-                    <div class="projet-image">
-                        <div class="projet-placeholder">🚀</div>
-                    </div>
-                    <div class="projet-content">
-                        <h3>Corvio</h3>
-                        <p>Solution de communication d'entreprise avec fonctionnalités collaboratives avancées.</p>
-                        <a href="#" class="projet-link">En savoir plus</a>
-                    </div>
+        <!-- Section Projets -->
+        <section id="projets" class="projets" aria-labelledby="projets-title">
+            <div class="container">
+                <h2 class="section-title" id="projets-title">Mes Projets</h2>
+                <div class="projets-grid" role="list" aria-label="Liste des projets réalisés">
+                    <article class="projet-card" role="listitem">
+                        <div class="projet-image" role="img" aria-label="Interface du projet Kwiz">
+                            <div class="projet-placeholder" aria-hidden="true">🎮</div>
+                        </div>
+                        <div class="projet-content">
+                            <h3>Kwiz</h3>
+                            <p>Application de quiz interactif avec système de scores et classements en temps réel. Développée avec React et Node.js.</p>
+                            <div class="projet-tech">
+                                <span class="tech-tag">React</span>
+                                <span class="tech-tag">Node.js</span>
+                                <span class="tech-tag">MongoDB</span>
+                                <span class="tech-tag">Socket.io</span>
+                            </div>
+                            <div class="projet-links">
+                                <a href="#" class="projet-link" aria-label="Voir le projet Kwiz">En savoir plus</a>
+                                <a href="#" class="projet-link external" aria-label="Code source du projet Kwiz">Code source</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="projet-card" role="listitem">
+                        <div class="projet-image" role="img" aria-label="Interface du projet Snugly">
+                            <div class="projet-placeholder" aria-hidden="true">🏠</div>
+                        </div>
+                        <div class="projet-content">
+                            <h3>Snugly</h3>
+                            <p>Plateforme de gestion immobilière avec interface intuitive et outils d'analyse avancés pour les professionnels.</p>
+                            <div class="projet-tech">
+                                <span class="tech-tag">Vue.js</span>
+                                <span class="tech-tag">Express</span>
+                                <span class="tech-tag">PostgreSQL</span>
+                                <span class="tech-tag">D3.js</span>
+                            </div>
+                            <div class="projet-links">
+                                <a href="#" class="projet-link" aria-label="Voir le projet Snugly">En savoir plus</a>
+                                <a href="#" class="projet-link external" aria-label="Code source du projet Snugly">Code source</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="projet-card" role="listitem">
+                        <div class="projet-image" role="img" aria-label="Interface du projet Corvio">
+                            <div class="projet-placeholder" aria-hidden="true">🚀</div>
+                        </div>
+                        <div class="projet-content">
+                            <h3>Corvio</h3>
+                            <p>Solution de communication d'entreprise avec fonctionnalités collaboratives avancées et intégration API.</p>
+                            <div class="projet-tech">
+                                <span class="tech-tag">Angular</span>
+                                <span class="tech-tag">NestJS</span>
+                                <span class="tech-tag">Redis</span>
+                                <span class="tech-tag">Docker</span>
+                            </div>
+                            <div class="projet-links">
+                                <a href="#" class="projet-link" aria-label="Voir le projet Corvio">En savoir plus</a>
+                                <a href="#" class="projet-link external" aria-label="Code source du projet Corvio">Code source</a>
+                            </div>
+                        </div>
+                    </article>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Section Contact -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2 class="section-title">Contact</h2>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <p>N'hésitez pas à me contacter pour discuter de vos projets ou opportunités.</p>
-                    <div class="contact-links">
-                        <a href="mailto:julien.raad@email.com" class="contact-link">
-                            <span class="contact-icon">📧</span>
-                            julien.raad@email.com
-                        </a>
-                        <a href="https://linkedin.com/in/julienraad" target="_blank" rel="noopener noreferrer" class="contact-link">
-                            <span class="contact-icon">💼</span>
-                            LinkedIn
-                        </a>
-                        <a href="https://github.com/JulienRaadGit" target="_blank" rel="noopener noreferrer" class="contact-link">
-                            <span class="contact-icon">💻</span>
-                            GitHub
-                        </a>
+        <!-- Section Contact -->
+        <section id="contact" class="contact" aria-labelledby="contact-title">
+            <div class="container">
+                <h2 class="section-title" id="contact-title">Contact</h2>
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <p>N'hésitez pas à me contacter pour discuter de vos projets ou opportunités. Je suis toujours intéressé par de nouveaux défis et collaborations.</p>
+                        <div class="contact-links" role="list" aria-label="Moyens de contact">
+                            <a href="mailto:julien.raad@email.com" class="contact-link" role="listitem" aria-label="Envoyer un email à julien.raad@email.com">
+                                <span class="contact-icon" aria-hidden="true">📧</span>
+                                <span>julien.raad@email.com</span>
+                            </a>
+                            <a href="https://linkedin.com/in/julienraad" target="_blank" rel="noopener noreferrer" class="contact-link" role="listitem" aria-label="Voir le profil LinkedIn de Julien Raad">
+                                <span class="contact-icon" aria-hidden="true">💼</span>
+                                <span>LinkedIn</span>
+                            </a>
+                            <a href="https://github.com/JulienRaadGit" target="_blank" rel="noopener noreferrer" class="contact-link" role="listitem" aria-label="Voir le profil GitHub de Julien Raad">
+                                <span class="contact-icon" aria-hidden="true">💻</span>
+                                <span>GitHub</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <!-- Footer -->
-    <footer class="footer">
+    <footer class="footer" role="contentinfo">
         <div class="container">
-            <p>&copy; 2025 Julien Raad – Tous droits réservés</p>
+            <div class="footer-content">
+                <p>&copy; 2025 Julien Raad – Tous droits réservés</p>
+                <div class="footer-links">
+                    <a href="#accueil" aria-label="Retour en haut de page">Haut de page</a>
+                    <a href="mailto:julien.raad@email.com" aria-label="Contact par email">Contact</a>
+                </div>
+            </div>
         </div>
     </footer>
+
+    <!-- Loading indicator -->
+    <div id="loading-indicator" class="loading-indicator" aria-hidden="true">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Back to top button -->
+    <button id="back-to-top" class="back-to-top" aria-label="Retour en haut de page" title="Retour en haut">
+        <span aria-hidden="true">↑</span>
+    </button>
 
     <script src="script.js"></script>
 </body>
