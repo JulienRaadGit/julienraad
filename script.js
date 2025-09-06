@@ -220,64 +220,15 @@ document.addEventListener('DOMContentLoaded', function() {
         progressBar.style.width = scrollPercent + '%';
     });
     
-    // === EFFET DE PARTICULES LÉGÈRES ===
-    let particleInterval;
+    // === ANIMATIONS INTERACTIVES ===
+    // Animation des éléments au survol
+    initializeHoverAnimations();
     
-    function createParticle() {
-        const particle = document.createElement('div');
-        const size = Math.random() * 4 + 2;
-        const colors = ['rgba(37, 99, 235, 0.3)', 'rgba(6, 182, 212, 0.3)', 'rgba(59, 130, 246, 0.3)'];
-        
-        particle.style.cssText = `
-            position: fixed;
-            width: ${size}px;
-            height: ${size}px;
-            background: ${colors[Math.floor(Math.random() * colors.length)]};
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 1;
-            animation: float ${Math.random() * 4 + 4}s linear infinite;
-        `;
-        
-        particle.style.left = Math.random() * 100 + 'vw';
-        particle.style.top = '100vh';
-        particle.style.animationDelay = Math.random() * 6 + 's';
-        
-        document.body.appendChild(particle);
-        
-        setTimeout(() => {
-            if (particle.parentNode) {
-                particle.remove();
-            }
-        }, 8000);
-    }
+    // Animation des éléments au scroll
+    initializeScrollAnimations();
     
-    // Ajouter l'animation CSS pour les particules
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes float {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
-    `;
-    document.head.appendChild(style);
-    
-    // Démarrer les particules seulement si l'utilisateur n'a pas de préférence reduced motion
-    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        particleInterval = setInterval(createParticle, CONFIG.particleInterval);
-    }
+    // Animation des boutons et liens
+    initializeButtonAnimations();
     
     // === GESTION DES LIENS EXTERNES ===
     // Ajouter des attributs de sécurité aux liens externes
@@ -464,6 +415,159 @@ function initializeInteractions() {
     }
 }
 
+// Initialisation des animations de hover
+function initializeHoverAnimations() {
+    // Animation des cartes de projets
+    const projetCards = document.querySelectorAll('.projet-card');
+    projetCards.forEach((card, index) => {
+        card.style.animationDelay = `${index * 0.1}s`;
+        card.classList.add('animate-on-scroll');
+        
+        // Effet de rotation au hover
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-15px) rotateY(5deg) scale(1.05)';
+            this.style.boxShadow = '0 25px 50px rgba(0, 0, 0, 0.2)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) rotateY(0deg) scale(1)';
+            this.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.1)';
+        });
+    });
+    
+    // Animation des éléments de timeline
+    const timelineItems = document.querySelectorAll('.timeline-item');
+    timelineItems.forEach((item, index) => {
+        item.style.animationDelay = `${index * 0.2}s`;
+        item.classList.add('animate-on-scroll');
+        
+        item.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateX(10px) scale(1.02)';
+            this.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.15)';
+        });
+        
+        item.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateX(0) scale(1)';
+            this.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.1)';
+        });
+    });
+    
+    // Animation des liens de contact
+    const contactLinks = document.querySelectorAll('.contact-link');
+    contactLinks.forEach((link, index) => {
+        link.style.animationDelay = `${index * 0.15}s`;
+        link.classList.add('animate-on-scroll');
+        
+        link.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-5px) scale(1.05)';
+            this.style.boxShadow = '0 15px 30px rgba(0, 0, 0, 0.2)';
+        });
+        
+        link.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+            this.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
+        });
+    });
+}
+
+// Initialisation des animations de scroll
+function initializeScrollAnimations() {
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-in');
+                
+                // Animation spéciale pour les éléments de timeline
+                if (entry.target.classList.contains('timeline-item')) {
+                    setTimeout(() => {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }, 200);
+                }
+            }
+        });
+    }, observerOptions);
+    
+    // Observer tous les éléments animables
+    const animatedElements = document.querySelectorAll('.animate-on-scroll');
+    animatedElements.forEach(el => {
+        observer.observe(el);
+    });
+}
+
+// Initialisation des animations de boutons
+function initializeButtonAnimations() {
+    // Animation des boutons CTA
+    const ctaButtons = document.querySelectorAll('.cta-button');
+    ctaButtons.forEach(button => {
+        button.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-3px) scale(1.05)';
+            this.style.boxShadow = '0 20px 40px rgba(37, 99, 235, 0.4)';
+        });
+        
+        button.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+            this.style.boxShadow = '0 10px 30px rgba(37, 99, 235, 0.3)';
+        });
+        
+        button.addEventListener('mousedown', function() {
+            this.style.transform = 'translateY(0) scale(0.95)';
+        });
+        
+        button.addEventListener('mouseup', function() {
+            this.style.transform = 'translateY(-3px) scale(1.05)';
+        });
+    });
+    
+    // Animation des liens de navigation
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+        link.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-2px)';
+            this.style.color = 'var(--primary-color)';
+        });
+        
+        link.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+            this.style.color = '';
+        });
+    });
+    
+    // Animation du logo
+    const logo = document.querySelector('.nav-logo a');
+    if (logo) {
+        logo.addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.1) rotate(2deg)';
+        });
+        
+        logo.addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1) rotate(0deg)';
+        });
+    }
+    
+    // Animation des tags technologiques
+    const techTags = document.querySelectorAll('.tech-tag');
+    techTags.forEach((tag, index) => {
+        tag.style.animationDelay = `${index * 0.1}s`;
+        tag.classList.add('animate-on-scroll');
+        
+        tag.addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.1) rotate(5deg)';
+            this.style.boxShadow = '0 5px 15px rgba(37, 99, 235, 0.3)';
+        });
+        
+        tag.addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1) rotate(0deg)';
+            this.style.boxShadow = 'none';
+        });
+    });
+}
+
 // Initialisation des performances
 function initializePerformance() {
     // Lazy loading des images (si ajoutées plus tard)
@@ -539,9 +643,7 @@ function getPerformanceMetrics() {
 
 // Nettoyage lors de la fermeture de la page
 window.addEventListener('beforeunload', function() {
-    if (particleInterval) {
-        clearInterval(particleInterval);
-    }
+    // Nettoyage des animations si nécessaire
 });
 
 // Gestion des erreurs globales
