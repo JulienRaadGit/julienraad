@@ -78,9 +78,9 @@ class PortfolioApp {
             new Typed('#typed-text', {
                 strings: [
                     'Julien Raad',
-                    'Développeur Full Stack',
+                    'Développeur Unity',
                     'Étudiant Gaming Campus',
-                    'Créateur d\'expériences'
+                    'Créateur de jeux mobiles'
                 ],
                 typeSpeed: 80,
                 backSpeed: 50,
@@ -769,7 +769,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Add welcome message to console
     console.log('%c👋 Bienvenue sur le portfolio de Julien Raad!', 'color: #667eea; font-size: 16px; font-weight: bold;');
-    console.log('%c💻 Développeur Full Stack & Étudiant Gaming Campus', 'color: #764ba2; font-size: 12px;');
+    console.log('%c💻 Développeur Unity & Étudiant Gaming Campus', 'color: #764ba2; font-size: 12px;');
     console.log('%c🚀 Technologies modernes et design innovant', 'color: #06b6d4; font-size: 10px;');
     
     // Performance optimization: Preload critical resources
