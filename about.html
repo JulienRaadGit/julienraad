@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>À propos - Julien Raad</title>
+    <meta name="description" content="En savoir plus sur Julien Raad, ses compétences, son parcours et sa passion pour le développement web et les nouvelles technologies.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Animation Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.0/echarts.min.js"></script>
+    
+    <!-- Custom Styles -->
+    <style>
+        :root {
+            --primary-blue: #1e3a8a;
+            --electric-blue: #3b82f6;
+            --slate-gray: #64748b;
+            --light-gray: #f8fafc;
+            --dark-navy: #0f172a;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .timeline-item {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .timeline-item.revealed {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .timeline-line {
+            position: absolute;
+            left: 2rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--electric-blue), var(--primary-blue));
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: 1.5rem;
+            width: 1rem;
+            height: 1rem;
+            background: var(--electric-blue);
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+        
+        .section-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .section-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background: var(--electric-blue);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .achievement-card {
+            transition: all 0.3s ease;
+        }
+        
+        .achievement-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0">
+                    <a href="index.html" class="text-2xl font-bold gradient-text">Julien Raad</a>
+                </div>
+                
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="index.html" class="nav-link text-gray-600 hover:text-gray-900 font-medium">Accueil</a>
+                        <a href="about.html" class="nav-link text-gray-900 font-medium">À propos</a>
+                        <a href="projects.html" class="nav-link text-gray-600 hover:text-gray-900 font-medium">Projets</a>
+                        <a href="contact.html" class="nav-link text-gray-600 hover:text-gray-900 font-medium">Contact</a>
+                    </div>
+                </div>
+                
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-gray-900">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-gray-200">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="index.html" class="block px-3 py-2 text-gray-600 hover:text-gray-900">Accueil</a>
+                <a href="about.html" class="block px-3 py-2 text-gray-900 font-medium">À propos</a>
+                <a href="projects.html" class="block px-3 py-2 text-gray-600 hover:text-gray-900">Projets</a>
+                <a href="contact.html" class="block px-3 py-2 text-gray-600 hover:text-gray-900">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-24 pb-16 bg-gradient-to-br from-blue-50 to-purple-50">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-16 section-reveal">
+                <h1 class="text-5xl lg:text-6xl font-bold text-gray-900 mb-6">À propos de moi</h1>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Passionné par le développement web et les nouvelles technologies, je mets mes compétences au service de projets innovants et créatifs.
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="section-reveal">
+                    <img src="resources/julien-portrait.png" alt="Julien Raad" class="w-80 h-80 rounded-2xl object-cover shadow-2xl mx-auto">
+                </div>
+                
+                <div class="section-reveal">
+                    <div class="bg-white rounded-2xl p-8 shadow-lg">
+                        <h2 class="text-3xl font-bold text-gray-900 mb-6">Julien Raad</h2>
+                        <p class="text-gray-600 text-lg leading-relaxed mb-6">
+                            Étudiant en informatique à Gaming Campus Paris, je suis spécialisé dans le développement web moderne et les technologies interactives. 
+                            Ma passion pour la création d'expériences numériques innovantes me pousse à explorer constamment de nouvelles technologies et méthodologies.
+                        </p>
+                        
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div class="text-center p-4 bg-blue-50 rounded-lg">
+                                <div class="text-2xl font-bold text-blue-600">3+</div>
+                                <div class="text-sm text-gray-600">Années d'expérience</div>
+                            </div>
+                            <div class="text-center p-4 bg-purple-50 rounded-lg">
+                                <div class="text-2xl font-bold text-purple-600">15+</div>
+                                <div class="text-sm text-gray-600">Projets réalisés</div>
+                            </div>
+                            <div class="text-center p-4 bg-green-50 rounded-lg">
+                                <div class="text-2xl font-bold text-green-600">5+</div>
+                                <div class="text-sm text-gray-600">Technologies maîtrisées</div>
+                            </div>
+                            <div class="text-center p-4 bg-orange-50 rounded-lg">
+                                <div class="text-2xl font-bold text-orange-600">2024</div>
+                                <div class="text-sm text-gray-600">Diplôme Gaming Campus</div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex space-x-4">
+                            <a href="contact.html" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                                Travaillons ensemble
+                            </a>
+                            <a href="#timeline" class="border border-gray-300 text-gray-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-colors">
+                                Mon parcours
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Timeline -->
+    <section id="timeline" class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-16 section-reveal">
+                <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Mon parcours</h2>
+                <p class="text-xl text-gray-600">
+                    Un parcours riche en apprentissage et en expériences professionnelles.
+                </p>
+            </div>
+            
+            <div class="relative">
+                <div class="timeline-line"></div>
+                
+                <!-- Timeline Item 1 -->
+                <div class="timeline-item relative pl-16 mb-12">
+                    <div class="timeline-dot"></div>
+                    <div class="bg-gray-50 rounded-2xl p-8 shadow-lg">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                            <h3 class="text-2xl font-bold text-gray-900">Licence Informatique</h3>
+                            <span class="text-blue-600 font-semibold">2021 - 2024</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            Formation solide en informatique fondamentale, algorithmique, programmation et bases de données. 
+                            Acquisition de compétences en développement logiciel et architecture système.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Algorithmique</span>
+                            <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">POO</span>
+                            <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">Bases de données</span>
+                            <span class="px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-sm">Architecture</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Timeline Item 2 -->
+                <div class="timeline-item relative pl-16 mb-12">
+                    <div class="timeline-dot"></div>
+                    <div class="bg-gray-50 rounded-2xl p-8 shadow-lg">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                            <h3 class="text-2xl font-bold text-gray-900">Gaming Campus Paris</h3>
+                            <span class="text-blue-600 font-semibold">2024 - Présent</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            Spécialisation en développement de jeux vidéo et technologies interactives. 
+                            Formation avancée en moteurs de jeu, programmation graphique et réalité virtuelle.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Unity 3D</span>
+                            <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">Unreal Engine</span>
+                            <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">VR/AR</span>
+                            <span class="px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-sm">Game Design</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Timeline Item 3 -->
+                <div class="timeline-item relative pl-16 mb-12">
+                    <div class="timeline-dot"></div>
+                    <div class="bg-gray-50 rounded-2xl p-8 shadow-lg">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                            <h3 class="text-2xl font-bold text-gray-900">Projets Personnels</h3>
+                            <span class="text-blue-600 font-semibold">2022 - Présent</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            Développement d'applications web et mobiles, exploration des dernières technologies. 
+                            Création de solutions innovantes et expérimentation avec les frameworks modernes.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">React</span>
+                            <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">Vue.js</span>
+                            <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">Angular</span>
+                            <span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm">Node.js</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Visualization -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-16 section-reveal">
+                <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Compétences détaillées</h2>
+                <p class="text-xl text-gray-600">
+                    Une vue d'ensemble de mes compétences techniques et leur niveau de maîtrise.
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12">
+                <!-- Skills Radar Chart -->
+                <div class="section-reveal">
+                    <div class="bg-white rounded-2xl p-8 shadow-lg">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-6">Aperçu des compétences</h3>
+                        <div id="skills-radar" style="height: 400px;"></div>
+                    </div>
+                </div>
+                
+                <!-- Technology Stack -->
+                <div class="section-reveal">
+                    <div class="bg-white rounded-2xl p-8 shadow-lg">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-6">Stack technique</h3>
+                        <div class="space-y-6">
+                            <div class="tech-category">
+                                <h4 class="text-lg font-semibold text-gray-900 mb-3">Frontend</h4>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="flex items-center space-x-3 p-3 bg-blue-50 rounded-lg">
+                                        <div class="w-8 h-8 bg-blue-500 rounded flex items-center justify-center text-white font-bold text-sm">R</div>
+                                        <div>
+                                            <div class="font-medium text-gray-900">React</div>
+                                            <div class="text-sm text-gray-600">90% de maîtrise</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-3 p-3 bg-green-50 rounded-lg">
+                                        <div class="w-8 h-8 bg-green-500 rounded flex items-center justify-center text-white font-bold text-sm">V</div>
+                                        <div>
+                                            <div class="font-medium text-gray-900">Vue.js</div>
+                                            <div class="text-sm text-gray-600">80% de maîtrise</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-3 p-3 bg-red-50 rounded-lg">
+                                        <div class="w-8 h-8 bg-red-500 rounded flex items-center justify-center text-white font-bold text-sm">A</div>
+                                        <div>
+                                            <div class="font-medium text-gray-900">Angular</div>
+                                            <div class="text-sm text-gray-600">75% de maîtrise</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-3 p-3 bg-purple-50 rounded-lg">
+                                        <div class="w-8 h-8 bg-purple-500 rounded flex items-center justify-center text-white font-bold text-sm">T</div>
+                                        <div>
+                                            <div class="font-medium text-gray-900">TypeScript</div>
+                                            <div class="text-sm text-gray-600">85% de maîtrise</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="tech-category">
+                                <h4 class="text-lg font-semibold text-gray-900 mb-3">Backend</h4>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="flex items-center space-x-3 p-3 bg-yellow-50 rounded-lg">
+                                        <div class="w-8 h-8 bg-yellow-500 rounded flex items-center justify-center text-white font-bold text-sm">N</div>
+                                        <div>
+                                            <div class="font-medium text-gray-900">Node.js</div>
+                                            <div class="text-sm text-gray-600">88% de maîtrise</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-3 p-3 bg-blue-50 rounded-lg">
+                                        <div class="w-8 h-8 bg-blue-500 rounded flex items-center justify-center text-white font-bold text-sm">P</div>
+                                        <div>
+                                            <div class="font-medium text-gray-900">Python</div>
+                                            <div class="text-sm text-gray-600">75% de maîtrise</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="tech-category">
+                                <h4 class="text-lg font-semibold text-gray-900 mb-3">Databases</h4>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="flex items-center space-x-3 p-3 bg-green-50 rounded-lg">
+                                        <div class="w-8 h-8 bg-green-500 rounded flex items-center justify-center text-white font-bold text-sm">M</div>
+                                        <div>
+                                            <div class="font-medium text-gray-900">MongoDB</div>
+                                            <div class="text-sm text-gray-600">82% de maîtrise</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+                                        <div class="w-8 h-8 bg-gray-500 rounded flex items-center justify-center text-white font-bold text-sm">P</div>
+                                        <div>
+                                            <div class="font-medium text-gray-900">PostgreSQL</div>
+                                            <div class="text-sm text-gray-600">80% de maîtrise</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-16 section-reveal">
+                <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Réalisations</h2>
+                <p class="text-xl text-gray-600">
+                    Quelques-unes de mes réalisations et certifications.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="achievement-card bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-8 text-center section-reveal">
+                    <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Certification React</h3>
+                    <p class="text-gray-600 mb-4">Certification officielle React Developer</p>
+                    <span class="text-blue-600 font-semibold">2023</span>
+                </div>
+                
+                <div class="achievement-card bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-8 text-center section-reveal">
+                    <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Hackathon Winner</h3>
+                    <p class="text-gray-600 mb-4">1er prix Gaming Campus Hackathon</p>
+                    <span class="text-green-600 font-semibold">2024</span>
+                </div>
+                
+                <div class="achievement-card bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-8 text-center section-reveal">
+                    <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Open Source</h3>
+                    <p class="text-gray-600 mb-4">Contributeur actif sur GitHub</p>
+                    <span class="text-purple-600 font-semibold">2022-2025</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-20 bg-gradient-to-r from-blue-600 to-purple-600">
+        <div class="max-w-4xl mx-auto px-6 lg:px-8 text-center">
+            <div class="section-reveal">
+                <h2 class="text-4xl lg:text-5xl font-bold text-white mb-6">Intéressé par mon profil ?</h2>
+                <p class="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+                    Je suis toujours ouvert à de nouvelles opportunités et collaborations. 
+                    N'hésitez pas à me contacter pour discuter de vos projets.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="contact.html" class="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-all inline-flex items-center justify-center">
+                        Me contacter
+                        <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                        </svg>
+                    </a>
+                    <a href="projects.html" class="glass-card text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white/20 transition-all inline-flex items-center justify-center border border-white/30">
+                        Voir mes projets
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center">
+                <div class="mb-6">
+                    <a href="index.html" class="text-2xl font-bold gradient-text">Julien Raad</a>
+                </div>
+                
+                <div class="flex justify-center space-x-6 mb-8">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                    </a>
+                </div>
+                
+                <p class="text-gray-400 text-sm">
+                    © 2025 Julien Raad. Tous droits réservés.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="main.js"></script>
+    <script>
+        // Initialize skills radar chart
+        document.addEventListener('DOMContentLoaded', function() {
+            const chartDom = document.getElementById('skills-radar');
+            const myChart = echarts.init(chartDom);
+            
+            const option = {
+                title: {
+                    text: 'Niveau de compétences',
+                    left: 'center',
+                    textStyle: {
+                        fontSize: 16,
+                        fontWeight: 'bold'
+                    }
+                },
+                radar: {
+                    indicator: [
+                        { name: 'Frontend', max: 100 },
+                        { name: 'Backend', max: 100 },
+                        { name: 'Databases', max: 100 },
+                        { name: 'Game Dev', max: 100 },
+                        { name: 'DevOps', max: 100 },
+                        { name: 'Design', max: 100 }
+                    ],
+                    radius: '60%'
+                },
+                series: [{
+                    name: 'Compétences',
+                    type: 'radar',
+                    data: [{
+                        value: [90, 85, 80, 75, 70, 65],
+                        name: 'Niveau actuel',
+                        areaStyle: {
+                            color: 'rgba(59, 130, 246, 0.3)'
+                        },
+                        lineStyle: {
+                            color: '#3b82f6'
+                        }
+                    }]
+                }]
+            };
+            
+            myChart.setOption(option);
+            
+            // Responsive chart
+            window.addEventListener('resize', function() {
+                myChart.resize();
+            });
+        });
+    </script>
+</body>
+</html>

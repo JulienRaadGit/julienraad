@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Julien Raad</title>
+    <meta name="description" content="Contactez Julien Raad pour vos projets de développement web. Disponible pour des collaborations et des opportunités professionnelles.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Animation Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    
+    <!-- Custom Styles -->
+    <style>
+        :root {
+            --primary-blue: #1e3a8a;
+            --electric-blue: #3b82f6;
+            --slate-gray: #64748b;
+            --light-gray: #f8fafc;
+            --dark-navy: #0f172a;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .section-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .section-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background: var(--electric-blue);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .form-input {
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.2);
+        }
+        
+        .contact-card {
+            transition: all 0.3s ease;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        
+        .step-indicator {
+            transition: all 0.3s ease;
+        }
+        
+        .step-indicator.active {
+            background: linear-gradient(135deg, var(--primary-blue), var(--electric-blue));
+            color: white;
+        }
+        
+        .step-indicator.completed {
+            background: #10b981;
+            color: white;
+        }
+        
+        .form-step {
+            display: none;
+        }
+        
+        .form-step.active {
+            display: block;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .success-animation {
+            animation: successPulse 0.6s ease-out;
+        }
+        
+        @keyframes successPulse {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0">
+                    <a href="index.html" class="text-2xl font-bold gradient-text">Julien Raad</a>
+                </div>
+                
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="index.html" class="nav-link text-gray-600 hover:text-gray-900 font-medium">Accueil</a>
+                        <a href="about.html" class="nav-link text-gray-600 hover:text-gray-900 font-medium">À propos</a>
+                        <a href="projects.html" class="nav-link text-gray-600 hover:text-gray-900 font-medium">Projets</a>
+                        <a href="contact.html" class="nav-link text-gray-900 font-medium">Contact</a>
+                    </div>
+                </div>
+                
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-gray-900">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-gray-200">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="index.html" class="block px-3 py-2 text-gray-600 hover:text-gray-900">Accueil</a>
+                <a href="about.html" class="block px-3 py-2 text-gray-600 hover:text-gray-900">À propos</a>
+                <a href="projects.html" class="block px-3 py-2 text-gray-600 hover:text-gray-900">Projets</a>
+                <a href="contact.html" class="block px-3 py-2 text-gray-900 font-medium">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-24 pb-16 bg-gradient-to-br from-blue-50 to-purple-50">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-16 section-reveal">
+                <h1 class="text-5xl lg:text-6xl font-bold text-gray-900 mb-6">Contactez-moi</h1>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Prêt à collaborer sur votre prochain projet ? N'hésitez pas à me contacter pour discuter de vos idées et objectifs.
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-3 gap-8 mb-16">
+                <div class="contact-card bg-white rounded-2xl p-8 shadow-lg text-center section-reveal">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Email</h3>
+                    <p class="text-gray-600 mb-3">julien.raad@email.com</p>
+                    <p class="text-sm text-gray-500">Réponse sous 24h</p>
+                </div>
+                
+                <div class="contact-card bg-white rounded-2xl p-8 shadow-lg text-center section-reveal">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">LinkedIn</h3>
+                    <p class="text-gray-600 mb-3">Julien Raad</p>
+                    <p class="text-sm text-gray-500">Connectons-nous</p>
+                </div>
+                
+                <div class="contact-card bg-white rounded-2xl p-8 shadow-lg text-center section-reveal">
+                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-purple-600" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">GitHub</h3>
+                    <p class="text-gray-600 mb-3">@JulienRaadGit</p>
+                    <p class="text-sm text-gray-500">Voir mon code</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form -->
+    <section class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-16 section-reveal">
+                <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Envoyez-moi un message</h2>
+                <p class="text-xl text-gray-600">
+                    Remplissez le formulaire ci-dessous et je vous répondrai dans les plus brefs délais.
+                </p>
+            </div>
+            
+            <div class="bg-gray-50 rounded-2xl p-8 lg:p-12 section-reveal">
+                <!-- Progress Steps -->
+                <div class="flex justify-center mb-12">
+                    <div class="flex items-center space-x-4">
+                        <div class="step-indicator active w-10 h-10 rounded-full flex items-center justify-center font-semibold text-sm">1</div>
+                        <div class="w-12 h-1 bg-gray-300"></div>
+                        <div class="step-indicator w-10 h-10 rounded-full flex items-center justify-center font-semibold text-sm bg-gray-300 text-gray-600">2</div>
+                        <div class="w-12 h-1 bg-gray-300"></div>
+                        <div class="step-indicator w-10 h-10 rounded-full flex items-center justify-center font-semibold text-sm bg-gray-300 text-gray-600">3</div>
+                    </div>
+                </div>
+                
+                <form id="contact-form" class="space-y-8">
+                    <!-- Step 1: Basic Information -->
+                    <div class="form-step active" data-step="1">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-6 text-center">Informations de base</h3>
+                        
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="firstName" class="block text-sm font-medium text-gray-700 mb-2">Prénom *</label>
+                                <input type="text" id="firstName" name="firstName" required 
+                                       class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            </div>
+                            <div>
+                                <label for="lastName" class="block text-sm font-medium text-gray-700 mb-2">Nom *</label>
+                                <input type="text" id="lastName" name="lastName" required 
+                                       class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email *</label>
+                            <input type="email" id="email" name="email" required 
+                                   class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        
+                        <div>
+                            <label for="company" class="block text-sm font-medium text-gray-700 mb-2">Entreprise (optionnel)</label>
+                            <input type="text" id="company" name="company" 
+                                   class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                    </div>
+                    
+                    <!-- Step 2: Project Details -->
+                    <div class="form-step" data-step="2">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-6 text-center">Détails du projet</h3>
+                        
+                        <div>
+                            <label for="projectType" class="block text-sm font-medium text-gray-700 mb-2">Type de projet *</label>
+                            <select id="projectType" name="projectType" required 
+                                    class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="">Sélectionnez un type de projet</option>
+                                <option value="web-app">Application Web</option>
+                                <option value="mobile-app">Application Mobile</option>
+                                <option value="game">Jeu Vidéo</option>
+                                <option value="vr-ar">VR/AR</option>
+                                <option value="website">Site Web</option>
+                                <option value="other">Autre</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="budget" class="block text-sm font-medium text-gray-700 mb-2">Budget approximatif</label>
+                            <select id="budget" name="budget" 
+                                    class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="">Sélectionnez une fourchette budgétaire</option>
+                                <option value="under-5k">Moins de 5 000 €</option>
+                                <option value="5k-15k">5 000 € - 15 000 €</option>
+                                <option value="15k-30k">15 000 € - 30 000 €</option>
+                                <option value="30k-50k">30 000 € - 50 000 €</option>
+                                <option value="over-50k">Plus de 50 000 €</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="timeline" class="block text-sm font-medium text-gray-700 mb-2">Échéance souhaitée</label>
+                            <select id="timeline" name="timeline" 
+                                    class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="">Sélectionnez un délai</option>
+                                <option value="asap">Dès que possible</option>
+                                <option value="1-month">Dans 1 mois</option>
+                                <option value="3-months">Dans 3 mois</option>
+                                <option value="6-months">Dans 6 mois</option>
+                                <option value="flexible">Flexible</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 3: Message -->
+                    <div class="form-step" data-step="3">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-6 text-center">Dites-moi en plus</h3>
+                        
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Description du projet *</label>
+                            <textarea id="message" name="message" rows="6" required 
+                                      placeholder="Décrivez votre projet, vos objectifs et vos attentes..."
+                                      class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-3">Technologies souhaitées (optionnel)</label>
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="checkbox" name="technologies" value="react" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                                    <span class="text-sm text-gray-700">React</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="checkbox" name="technologies" value="vue" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                                    <span class="text-sm text-gray-700">Vue.js</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="checkbox" name="technologies" value="angular" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                                    <span class="text-sm text-gray-700">Angular</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="checkbox" name="technologies" value="nodejs" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                                    <span class="text-sm text-gray-700">Node.js</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="checkbox" name="technologies" value="python" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                                    <span class="text-sm text-gray-700">Python</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="checkbox" name="technologies" value="unity" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                                    <span class="text-sm text-gray-700">Unity 3D</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Form Navigation -->
+                    <div class="flex justify-between pt-8 border-t">
+                        <button type="button" id="prev-step" class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition-colors" style="display: none;">
+                            Précédent
+                        </button>
+                        <div class="flex-1"></div>
+                        <button type="button" id="next-step" class="px-8 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                            Suivant
+                        </button>
+                        <button type="submit" id="submit-form" class="px-8 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors" style="display: none;">
+                            Envoyer le message
+                        </button>
+                    </div>
+                </form>
+                
+                <!-- Success Message -->
+                <div id="success-message" class="text-center py-12 hidden">
+                    <div class="success-animation">
+                        <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Message envoyé avec succès !</h3>
+                        <p class="text-gray-600 mb-6">Je vous répondrai dans les plus brefs délais. Merci pour votre confiance !</p>
+                        <button onclick="resetForm()" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                            Envoyer un autre message
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-4xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-16 section-reveal">
+                <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Questions fréquentes</h2>
+                <p class="text-xl text-gray-600">
+                    Retrouvez ici les réponses aux questions les plus courantes.
+                </p>
+            </div>
+            
+            <div class="space-y-6">
+                <div class="faq-item bg-white rounded-2xl p-6 shadow-lg section-reveal">
+                    <button class="faq-question w-full text-left flex justify-between items-center">
+                        <h3 class="text-lg font-semibold text-gray-900">Quelles sont vos technologies préférées ?</h3>
+                        <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="faq-answer hidden mt-4 text-gray-600">
+                        Je travaille principalement avec React, Next.js, Node.js et TypeScript pour le développement web. 
+                        Pour les projets de réalité virtuelle, j'utilise Unity 3D avec C#. Je suis également à l'aise avec 
+                        Vue.js, Angular et diverses bases de données comme MongoDB et PostgreSQL.
+                    </div>
+                </div>
+                
+                <div class="faq-item bg-white rounded-2xl p-6 shadow-lg section-reveal">
+                    <button class="faq-question w-full text-left flex justify-between items-center">
+                        <h3 class="text-lg font-semibold text-gray-900">Quel est votre délai de réponse moyen ?</h3>
+                        <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="faq-answer hidden mt-4 text-gray-600">
+                        Je réponds généralement aux emails dans les 24 heures ouvrables. Pour les projets urgents, 
+                        je suis disponible pour des appels ou des réunions rapides dans la journée.
+                    </div>
+                </div>
+                
+                <div class="faq-item bg-white rounded-2xl p-6 shadow-lg section-reveal">
+                    <button class="faq-question w-full text-left flex justify-between items-center">
+                        <h3 class="text-lg font-semibold text-gray-900">Travaillez-vous en freelance ou en contrat ?</h3>
+                        <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="faq-answer hidden mt-4 text-gray-600">
+                        Je suis ouvert aux deux options. Je travaille en freelance pour des projets ponctuels, 
+                        mais je suis également disponible pour des contrats à long terme ou des positions de développeur 
+                        à temps partiel selon les besoins du projet.
+                    </div>
+                </div>
+                
+                <div class="faq-item bg-white rounded-2xl p-6 shadow-lg section-reveal">
+                    <button class="faq-question w-full text-left flex justify-between items-center">
+                        <h3 class="text-lg font-semibold text-gray-900">Proposez-vous des services de maintenance ?</h3>
+                        <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="faq-answer hidden mt-4 text-gray-600">
+                        Oui, je propose des services de maintenance et de support technique pour les projets que je développe. 
+                        Cela inclut les mises à jour de sécurité, les corrections de bugs et les améliorations fonctionnelles.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center">
+                <div class="mb-6">
+                    <a href="index.html" class="text-2xl font-bold gradient-text">Julien Raad</a>
+                </div>
+                
+                <div class="flex justify-center space-x-6 mb-8">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                    </a>
+                </div>
+                
+                <p class="text-gray-400 text-sm">
+                    © 2025 Julien Raad. Tous droits réservés.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="main.js"></script>
+    <script>
+        // Multi-step form functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('contact-form');
+            const steps = document.querySelectorAll('.form-step');
+            const stepIndicators = document.querySelectorAll('.step-indicator');
+            const nextBtn = document.getElementById('next-step');
+            const prevBtn = document.getElementById('prev-step');
+            const submitBtn = document.getElementById('submit-form');
+            const successMessage = document.getElementById('success-message');
+            
+            let currentStep = 1;
+            const totalSteps = steps.length;
+            
+            // FAQ functionality
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                const answer = item.querySelector('.faq-answer');
+                const icon = question.querySelector('svg');
+                
+                question.addEventListener('click', function() {
+                    const isOpen = !answer.classList.contains('hidden');
+                    
+                    // Close all other FAQ items
+                    faqItems.forEach(otherItem => {
+                        const otherAnswer = otherItem.querySelector('.faq-answer');
+                        const otherIcon = otherItem.querySelector('.faq-question svg');
+                        otherAnswer.classList.add('hidden');
+                        otherIcon.style.transform = 'rotate(0deg)';
+                    });
+                    
+                    // Toggle current item
+                    if (!isOpen) {
+                        answer.classList.remove('hidden');
+                        icon.style.transform = 'rotate(180deg)';
+                    }
+                });
+            });
+            
+            function updateStep() {
+                // Update step visibility
+                steps.forEach((step, index) => {
+                    if (index + 1 === currentStep) {
+                        step.classList.add('active');
+                    } else {
+                        step.classList.remove('active');
+                    }
+                });
+                
+                // Update step indicators
+                stepIndicators.forEach((indicator, index) => {
+                    indicator.classList.remove('active', 'completed');
+                    if (index + 1 === currentStep) {
+                        indicator.classList.add('active');
+                    } else if (index + 1 < currentStep) {
+                        indicator.classList.add('completed');
+                    }
+                });
+                
+                // Update button visibility
+                prevBtn.style.display = currentStep > 1 ? 'block' : 'none';
+                nextBtn.style.display = currentStep < totalSteps ? 'block' : 'none';
+                submitBtn.style.display = currentStep === totalSteps ? 'block' : 'none';
+            }
+            
+            nextBtn.addEventListener('click', function() {
+                if (validateCurrentStep()) {
+                    currentStep++;
+                    updateStep();
+                }
+            });
+            
+            prevBtn.addEventListener('click', function() {
+                currentStep--;
+                updateStep();
+            });
+            
+            function validateCurrentStep() {
+                const currentStepElement = document.querySelector(`.form-step[data-step="${currentStep}"]`);
+                const requiredFields = currentStepElement.querySelectorAll('[required]');
+                let isValid = true;
+                
+                requiredFields.forEach(field => {
+                    if (!field.value.trim()) {
+                        field.classList.add('border-red-500');
+                        isValid = false;
+                    } else {
+                        field.classList.remove('border-red-500');
+                    }
+                });
+                
+                if (!isValid) {
+                    alert('Veuillez remplir tous les champs obligatoires.');
+                }
+                
+                return isValid;
+            }
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (validateCurrentStep()) {
+                    // Simulate form submission
+                    const formData = new FormData(form);
+                    
+                    // Show loading state
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = `
+                        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Envoi en cours...
+                    `;
+                    
+                    setTimeout(() => {
+                        form.style.display = 'none';
+                        successMessage.classList.remove('hidden');
+                        
+                        // Reset form
+                        setTimeout(() => {
+                            resetForm();
+                        }, 5000);
+                    }, 2000);
+                }
+            });
+            
+            function resetForm() {
+                form.reset();
+                form.style.display = 'block';
+                successMessage.classList.add('hidden');
+                currentStep = 1;
+                updateStep();
+                
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Envoyer le message';
+                
+                // Reset all field styles
+                const allFields = form.querySelectorAll('input, textarea, select');
+                allFields.forEach(field => {
+                    field.classList.remove('border-red-500');
+                });
+            }
+            
+            // Initialize first step
+            updateStep();
+        });
+    </script>
+</body>
+</html>

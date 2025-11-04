@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projets - Julien Raad</title>
+    <meta name="description" content="Découvrez les projets de Julien Raad : applications web, jeux, expériences VR et solutions innovantes développées avec les dernières technologies.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Animation Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
+    
+    <!-- Custom Styles -->
+    <style>
+        :root {
+            --primary-blue: #1e3a8a;
+            --electric-blue: #3b82f6;
+            --slate-gray: #64748b;
+            --light-gray: #f8fafc;
+            --dark-navy: #0f172a;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .project-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-8px) rotateX(5deg) rotateY(5deg);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+        }
+        
+        .filter-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn.active {
+            background: linear-gradient(135deg, var(--primary-blue), var(--electric-blue));
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .section-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .section-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background: var(--electric-blue);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 1rem;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            margin: 2rem;
+            animation: modalSlideIn 0.3s ease-out;
+        }
+        
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        .search-input {
+            transition: all 0.3s ease;
+        }
+        
+        .search-input:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0">
+                    <a href="index.html" class="text-2xl font-bold gradient-text">Julien Raad</a>
+                </div>
+                
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="index.html" class="nav-link text-gray-600 hover:text-gray-900 font-medium">Accueil</a>
+                        <a href="about.html" class="nav-link text-gray-600 hover:text-gray-900 font-medium">À propos</a>
+                        <a href="projects.html" class="nav-link text-gray-900 font-medium">Projets</a>
+                        <a href="contact.html" class="nav-link text-gray-600 hover:text-gray-900 font-medium">Contact</a>
+                    </div>
+                </div>
+                
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-gray-900">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-gray-200">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="index.html" class="block px-3 py-2 text-gray-600 hover:text-gray-900">Accueil</a>
+                <a href="about.html" class="block px-3 py-2 text-gray-600 hover:text-gray-900">À propos</a>
+                <a href="projects.html" class="block px-3 py-2 text-gray-900 font-medium">Projets</a>
+                <a href="contact.html" class="block px-3 py-2 text-gray-600 hover:text-gray-900">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-24 pb-16 bg-gradient-to-br from-blue-50 to-purple-50">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-16 section-reveal">
+                <h1 class="text-5xl lg:text-6xl font-bold text-gray-900 mb-6">Mes Projets</h1>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Découvrez mes réalisations : applications web modernes, jeux interactifs, expériences VR et solutions innovantes.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Filters -->
+    <section class="py-12 bg-white">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 section-reveal">
+                <!-- Search Bar -->
+                <div class="flex-1 max-w-md">
+                    <div class="relative">
+                        <input 
+                            type="text" 
+                            id="project-search" 
+                            placeholder="Rechercher un projet..." 
+                            class="search-input w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        >
+                        <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div>
+                </div>
+                
+                <!-- Filter Buttons -->
+                <div class="flex flex-wrap gap-3">
+                    <button class="filter-btn active px-6 py-3 rounded-lg font-medium border border-gray-300" data-filter="all">
+                        Tous
+                    </button>
+                    <button class="filter-btn px-6 py-3 rounded-lg font-medium border border-gray-300" data-filter="web">
+                        Web Apps
+                    </button>
+                    <button class="filter-btn px-6 py-3 rounded-lg font-medium border border-gray-300" data-filter="game">
+                        Jeux
+                    </button>
+                    <button class="filter-btn px-6 py-3 rounded-lg font-medium border border-gray-300" data-filter="mobile">
+                        Mobile
+                    </button>
+                    <button class="filter-btn px-6 py-3 rounded-lg font-medium border border-gray-300" data-filter="vr">
+                        VR/AR
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Grid -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div id="projects-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Project 1: Kwiz -->
+                <div class="project-card bg-white rounded-2xl shadow-lg overflow-hidden section-reveal" data-category="web" data-name="kwiz quiz react nodejs">
+                    <div class="h-48 bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center relative overflow-hidden">
+                        <div class="text-white text-6xl">🎮</div>
+                        <div class="absolute top-4 right-4">
+                            <span class="px-3 py-1 bg-white/20 backdrop-blur-sm text-white rounded-full text-sm font-medium">
+                                Web App
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-3">Kwiz</h3>
+                        <p class="text-gray-600 mb-4">
+                            Application de quiz interactif avec système de scores et classements en temps réel. 
+                            Développée avec React et Node.js pour une expérience utilisateur fluide et engageante.
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">React</span>
+                            <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">Node.js</span>
+                            <span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm font-medium">MongoDB</span>
+                            <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">Socket.io</span>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <div class="flex space-x-3">
+                                <button class="text-blue-600 hover:text-blue-800 font-medium view-project" data-project="kwiz">
+                                    Voir détails
+                                </button>
+                                <a href="#" class="text-gray-600 hover:text-gray-800 font-medium">Code</a>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-500">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                </svg>
+                                1.2k
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2: Snugly -->
+                <div class="project-card bg-white rounded-2xl shadow-lg overflow-hidden section-reveal" data-category="web" data-name="snugly immobilier vuejs">
+                    <div class="h-48 bg-gradient-to-br from-green-500 to-teal-600 flex items-center justify-center relative overflow-hidden">
+                        <div class="text-white text-6xl">🏠</div>
+                        <div class="absolute top-4 right-4">
+                            <span class="px-3 py-1 bg-white/20 backdrop-blur-sm text-white rounded-full text-sm font-medium">
+                                Web App
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-3">Snugly</h3>
+                        <p class="text-gray-600 mb-4">
+                            Plateforme de gestion immobilière avec interface intuitive et outils d'analyse avancés. 
+                            Conçue pour les professionnels de l'immobilier avec tableau de bord analytique.
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">Vue.js</span>
+                            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">Express</span>
+                            <span class="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm font-medium">PostgreSQL</span>
+                            <span class="px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-sm font-medium">D3.js</span>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <div class="flex space-x-3">
+                                <button class="text-blue-600 hover:text-blue-800 font-medium view-project" data-project="snugly">
+                                    Voir détails
+                                </button>
+                                <a href="#" class="text-gray-600 hover:text-gray-800 font-medium">Code</a>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-500">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                </svg>
+                                856
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3: Corvio -->
+                <div class="project-card bg-white rounded-2xl shadow-lg overflow-hidden section-reveal" data-category="web" data-name="corvio communication entreprise">
+                    <div class="h-48 bg-gradient-to-br from-red-500 to-pink-600 flex items-center justify-center relative overflow-hidden">
+                        <div class="text-white text-6xl">🚀</div>
+                        <div class="absolute top-4 right-4">
+                            <span class="px-3 py-1 bg-white/20 backdrop-blur-sm text-white rounded-full text-sm font-medium">
+                                Web App
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-3">Corvio</h3>
+                        <p class="text-gray-600 mb-4">
+                            Solution de communication d'entreprise avec fonctionnalités collaboratives avancées. 
+                            Messagerie instantanée, gestion de projet et intégration API pour une productivité optimale.
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-medium">Angular</span>
+                            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">NestJS</span>
+                            <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-medium">Redis</span>
+                            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">Docker</span>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <div class="flex space-x-3">
+                                <button class="text-blue-600 hover:text-blue-800 font-medium view-project" data-project="corvio">
+                                    Voir détails
+                                </button>
+                                <a href="#" class="text-gray-600 hover:text-gray-800 font-medium">Code</a>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-500">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                </svg>
+                                2.1k
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4: VR Experience -->
+                <div class="project-card bg-white rounded-2xl shadow-lg overflow-hidden section-reveal" data-category="vr" data-name="vr experience unity 3d">
+                    <div class="h-48 bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center relative overflow-hidden">
+                        <div class="text-white text-6xl">🥽</div>
+                        <div class="absolute top-4 right-4">
+                            <span class="px-3 py-1 bg-white/20 backdrop-blur-sm text-white rounded-full text-sm font-medium">
+                                VR/AR
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-3">VR Experience</h3>
+                        <p class="text-gray-600 mb-4">
+                            Expérience de réalité virtuelle immersive développée avec Unity 3D. 
+                            Exploration d'environnements interactifs et de mécaniques de jeu innovantes en VR.
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">Unity 3D</span>
+                            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">C#</span>
+                            <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">OpenXR</span>
+                            <span class="px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-sm font-medium">Blender</span>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <div class="flex space-x-3">
+                                <button class="text-blue-600 hover:text-blue-800 font-medium view-project" data-project="vr-experience">
+                                    Voir détails
+                                </button>
+                                <a href="#" class="text-gray-600 hover:text-gray-800 font-medium">Code</a>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-500">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                </svg>
+                                743
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 5: Mobile App -->
+                <div class="project-card bg-white rounded-2xl shadow-lg overflow-hidden section-reveal" data-category="mobile" data-name="mobile app react native">
+                    <div class="h-48 bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center relative overflow-hidden">
+                        <div class="text-white text-6xl">📱</div>
+                        <div class="absolute top-4 right-4">
+                            <span class="px-3 py-1 bg-white/20 backdrop-blur-sm text-white rounded-full text-sm font-medium">
+                                Mobile
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-3">Mobile Tracker</h3>
+                        <p class="text-gray-600 mb-4">
+                            Application mobile de suivi et d'analyse développée avec React Native. 
+                            Interface intuitive et performances optimisées pour iOS et Android.
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">React Native</span>
+                            <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">Firebase</span>
+                            <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">Redux</span>
+                            <span class="px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-sm font-medium">TypeScript</span>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <div class="flex space-x-3">
+                                <button class="text-blue-600 hover:text-blue-800 font-medium view-project" data-project="mobile-tracker">
+                                    Voir détails
+                                </button>
+                                <a href="#" class="text-gray-600 hover:text-gray-800 font-medium">Code</a>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-500">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                </svg>
+                                567
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 6: Game Project -->
+                <div class="project-card bg-white rounded-2xl shadow-lg overflow-hidden section-reveal" data-category="game" data-name="game unity 2d platformer">
+                    <div class="h-48 bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center relative overflow-hidden">
+                        <div class="text-white text-6xl">🎮</div>
+                        <div class="absolute top-4 right-4">
+                            <span class="px-3 py-1 bg-white/20 backdrop-blur-sm text-white rounded-full text-sm font-medium">
+                                Jeu
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-3">Pixel Adventure</h3>
+                        <p class="text-gray-600 mb-4">
+                            Jeu 2D platformer développé avec Unity. Mécaniques de jeu classiques avec une touche moderne, 
+                            niveaux créatifs et système de progression innovant.
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">Unity 2D</span>
+                            <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">C#</span>
+                            <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">FMOD</span>
+                            <span class="px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-sm font-medium">Aseprite</span>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <div class="flex space-x-3">
+                                <button class="text-blue-600 hover:text-blue-800 font-medium view-project" data-project="pixel-adventure">
+                                    Voir détails
+                                </button>
+                                <a href="#" class="text-gray-600 hover:text-gray-800 font-medium">Code</a>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-500">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                </svg>
+                                892
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+            <!-- No Results Message -->
+            <div id="no-results" class="text-center py-16 hidden">
+                <div class="text-6xl mb-4">🔍</div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-2">Aucun projet trouvé</h3>
+                <p class="text-gray-600">Essayez de modifier vos critères de recherche ou de filtrage.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Modals -->
+    <div id="project-modal" class="modal">
+        <div class="modal-content">
+            <div class="p-8">
+                <div class="flex justify-between items-start mb-6">
+                    <h2 id="modal-title" class="text-3xl font-bold text-gray-900"></h2>
+                    <button id="close-modal" class="text-gray-400 hover:text-gray-600 text-2xl">×</button>
+                </div>
+                
+                <div id="modal-body">
+                    <!-- Dynamic content will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Call to Action -->
+    <section class="py-20 bg-gradient-to-r from-blue-600 to-purple-600">
+        <div class="max-w-4xl mx-auto px-6 lg:px-8 text-center">
+            <div class="section-reveal">
+                <h2 class="text-4xl lg:text-5xl font-bold text-white mb-6">Vous avez un projet en tête ?</h2>
+                <p class="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+                    Je suis toujours intéressé par de nouveaux défis et collaborations. 
+                    N'hésitez pas à me contacter pour discuter de votre projet.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="contact.html" class="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-all inline-flex items-center justify-center">
+                        Démarrer un projet
+                        <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                        </svg>
+                    </a>
+                    <a href="about.html" class="glass-card text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white/20 transition-all inline-flex items-center justify-center border border-white/30">
+                        En savoir plus
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center">
+                <div class="mb-6">
+                    <a href="index.html" class="text-2xl font-bold gradient-text">Julien Raad</a>
+                </div>
+                
+                <div class="flex justify-center space-x-6 mb-8">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                    </a>
+                </div>
+                
+                <p class="text-gray-400 text-sm">
+                    © 2025 Julien Raad. Tous droits réservés.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="main.js"></script>
+    <script>
+        // Project filtering and search functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const projectCards = document.querySelectorAll('.project-card');
+            const searchInput = document.getElementById('project-search');
+            const noResults = document.getElementById('no-results');
+            
+            // Filter functionality
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Update active button
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const filter = this.dataset.filter;
+                    filterProjects(filter, searchInput.value.toLowerCase());
+                });
+            });
+            
+            // Search functionality
+            searchInput.addEventListener('input', function() {
+                const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+                filterProjects(activeFilter, this.value.toLowerCase());
+            });
+            
+            function filterProjects(category, searchTerm) {
+                let visibleCount = 0;
+                
+                projectCards.forEach(card => {
+                    const cardCategory = card.dataset.category;
+                    const cardName = card.dataset.name.toLowerCase();
+                    
+                    const categoryMatch = category === 'all' || cardCategory === category;
+                    const searchMatch = searchTerm === '' || cardName.includes(searchTerm);
+                    
+                    if (categoryMatch && searchMatch) {
+                        card.style.display = 'block';
+                        visibleCount++;
+                        
+                        // Animate card appearance
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateY(0)';
+                        }, visibleCount * 100);
+                    } else {
+                        card.style.display = 'none';
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(30px)';
+                    }
+                });
+                
+                // Show/hide no results message
+                if (visibleCount === 0) {
+                    noResults.classList.remove('hidden');
+                } else {
+                    noResults.classList.add('hidden');
+                }
+            }
+            
+            // Project modal functionality
+            const modal = document.getElementById('project-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalBody = document.getElementById('modal-body');
+            const closeModal = document.getElementById('close-modal');
+            const viewProjectButtons = document.querySelectorAll('.view-project');
+            
+            const projectData = {
+                'kwiz': {
+                    title: 'Kwiz - Application de Quiz Interactive',
+                    content: `
+                        <div class="space-y-6">
+                            <div class="h-64 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                                <div class="text-white text-8xl">🎮</div>
+                            </div>
+                            
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div>
+                                    <h3 class="text-xl font-bold text-gray-900 mb-3">Description</h3>
+                                    <p class="text-gray-600 mb-4">
+                                        Kwiz est une application de quiz interactive qui permet aux utilisateurs de tester leurs connaissances 
+                                        dans différents domaines. Avec un système de scores en temps réel et des classements dynamiques, 
+                                        l'application offre une expérience compétitive et engageante.
+                                    </p>
+                                    
+                                    <h4 class="text-lg font-semibold text-gray-900 mb-2">Fonctionnalités principales</h4>
+                                    <ul class="text-gray-600 space-y-1">
+                                        <li>• Quiz multithématiques avec questions aléatoires</li>
+                                        <li>• Système de scores en temps réel avec Socket.io</li>
+                                        <li>• Classements dynamiques et tableaux de bord</li>
+                                        <li>• Mode multijoueur et solo</li>
+                                        <li>• Interface responsive et moderne</li>
+                                    </ul>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-xl font-bold text-gray-900 mb-3">Stack technique</h3>
+                                    <div class="flex flex-wrap gap-2 mb-4">
+                                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">React 18</span>
+                                        <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">Node.js</span>
+                                        <span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm">MongoDB</span>
+                                        <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">Socket.io</span>
+                                        <span class="px-3 py-1 bg-pink-100 text-pink-800 rounded-full text-sm">Tailwind CSS</span>
+                                    </div>
+                                    
+                                    <h4 class="text-lg font-semibold text-gray-900 mb-2">Performances</h4>
+                                    <div class="space-y-2">
+                                        <div class="flex justify-between">
+                                            <span class="text-gray-600">Temps de réponse</span>
+                                            <span class="text-green-600 font-medium">< 100ms</span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span class="text-gray-600">Utilisateurs actifs</span>
+                                            <span class="text-blue-600 font-medium">500+</span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span class="text-gray-600">Questions disponibles</span>
+                                            <span class="text-purple-600 font-medium">1000+</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex space-x-4 pt-4 border-t">
+                                <a href="#" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                                    Voir la démo
+                                </a>
+                                <a href="#" class="border border-gray-300 text-gray-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-colors">
+                                    Code source
+                                </a>
+                            </div>
+                        </div>
+                    `
+                },
+                'snugly': {
+                    title: 'Snugly - Plateforme Immobilière',
+                    content: `
+                        <div class="space-y-6">
+                            <div class="h-64 bg-gradient-to-br from-green-500 to-teal-600 rounded-lg flex items-center justify-center">
+                                <div class="text-white text-8xl">🏠</div>
+                            </div>
+                            
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div>
+                                    <h3 class="text-xl font-bold text-gray-900 mb-3">Description</h3>
+                                    <p class="text-gray-600 mb-4">
+                                        Snugly est une plateforme de gestion immobilière complète qui aide les professionnels 
+                                        à gérer leurs propriétés, clients et transactions. Avec des outils d'analyse avancés 
+                                        et une interface intuitive, la plateforme simplifie la gestion immobilière.
+                                    </p>
+                                    
+                                    <h4 class="text-lg font-semibold text-gray-900 mb-2">Fonctionnalités principales</h4>
+                                    <ul class="text-gray-600 space-y-1">
+                                        <li>• Gestion complète des propriétés et clients</li>
+                                        <li>• Tableau de bord analytique avec D3.js</li>
+                                        <li>• Système de matching propriété-client</li>
+                                        <li>• Gestion des documents et contrats</li>
+                                        <li>• Notifications et rappels automatiques</li>
+                                    </ul>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-xl font-bold text-gray-900 mb-3">Stack technique</h3>
+                                    <div class="flex flex-wrap gap-2 mb-4">
+                                        <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">Vue.js 3</span>
+                                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Express</span>
+                                        <span class="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm">PostgreSQL</span>
+                                        <span class="px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-sm">D3.js</span>
+                                        <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">Chart.js</span>
+                                    </div>
+                                    
+                                    <h4 class="text-lg font-semibold text-gray-900 mb-2">Statistiques</h4>
+                                    <div class="space-y-2">
+                                        <div class="flex justify-between">
+                                            <span class="text-gray-600">Propriétés gérées</span>
+                                            <span class="text-green-600 font-medium">250+</span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span class="text-gray-600">Clients actifs</span>
+                                            <span class="text-blue-600 font-medium">180+</span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span class="text-gray-600">Transactions</span>
+                                            <span class="text-teal-600 font-medium">€2.5M+</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex space-x-4 pt-4 border-t">
+                                <a href="#" class="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors">
+                                    Voir la démo
+                                </a>
+                                <a href="#" class="border border-gray-300 text-gray-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-colors">
+                                    Code source
+                                </a>
+                            </div>
+                        </div>
+                    `
+                }
+                // Add more project data as needed
+            };
+            
+            viewProjectButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const projectId = this.dataset.project;
+                    const project = projectData[projectId];
+                    
+                    if (project) {
+                        modalTitle.textContent = project.title;
+                        modalBody.innerHTML = project.content;
+                        modal.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                    }
+                });
+            });
+            
+            closeModal.addEventListener('click', function() {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+            
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
